@@ -3,6 +3,7 @@ const User = require("../models/user");
 
 const auth = async (req, res, next) => {
     try {
+        // req.header("Authorization") will return "Bearer *the token*" so we have to remove "Bearer "
         const token = req.header("Authorization").replace("Bearer ", "");
         const decoded = jwt.verify(token, "thisisjwt");
         const user = await User.findOne({

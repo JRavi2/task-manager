@@ -53,7 +53,7 @@ router.post("/users/logoutAll", auth, async (req, res) => {
     }
 });
 
-// List all the Users
+// Get current User
 router.get("/users/me", auth, async (req, res) => {
     res.send(req.user);
 });
