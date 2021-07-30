@@ -46,6 +46,21 @@ router.delete("/users/me/avatar", auth, async (req, res) => {
     res.send();
 });
 
+// Fetch the Current User's Avatar
+router.get("/users/me/avatar", auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+
+        if (!user || !user.avatar)
+            throw new Error();
+
+        res.set("Content-Type", "image/jpg");
+        res.send(user.avatar);
+    } catch (e) {
+        res.status(404).send();
+    }
+})
+
 // Fetch an Avatar
 router.get("/users/:id/avatar", async (req, res) => {
     try {
@@ -53,7 +68,7 @@ router.get("/users/:id/avatar", async (req, res) => {
 
         if (!user || !user.avatar)
             throw new Error();
-        
+
         res.set("Content-Type", "image/jpg");
         res.send(user.avatar);
     } catch (e) {
